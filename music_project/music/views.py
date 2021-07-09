@@ -1,13 +1,23 @@
 from django.http import Http404
-from django.shortcuts import render
 from .models import Song
 from .serializers import SongSerializer
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 
 # Create your views here.
+
+@api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        'SongList': 'music/',
+        'SongDetail': 'music/<int:pk>'
+    }
+    return Response(api_urls)
+
+
 class SongList(APIView):
     """
     This SongList class is used to allow a front-end users to easily identify and manipulate a list of songs in
@@ -21,6 +31,7 @@ class SongList(APIView):
         :return: The list of songs.
         """
         song = Song.objects.all()
+        # Converts all objects into JSON
         serializer = SongSerializer(song, many=True)
         return Response(serializer.data)
 
@@ -72,6 +83,15 @@ class SongDetail(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        song = self.get_object(pk)
+        song.likes += 1
+        serializer = SongSerializer(song, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
