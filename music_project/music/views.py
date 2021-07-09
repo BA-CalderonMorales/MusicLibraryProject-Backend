@@ -86,6 +86,13 @@ class SongDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, pk):
+        """
+        Can be used to isolate any specific attribute inside of Song. In this case, it's being
+        used to isolate the number of likes inside of the current Song model being viewed.
+        :param request: Taken in from the client.
+        :param pk: The specific Song that the client wants to manipulate. (It's location.)
+        :return: The updated Song object.
+        """
         song = self.get_object(pk)
         song.likes += 1
         serializer = SongSerializer(song, data=request.data, partial=True)
