@@ -3,4 +3,8 @@ In this repository, I'm finding out how to use Django REST Framework, in conjunc
 
 ______
 
-Upon completion of this project, I'll be uploading my JSON documents to show what all I completed as far as Postman method testing.
+Upon completion of this project, I'll be uploading my JSON api collection to show what all I completed as far as Postman method testing.
+
+______
+
+All documents have been uploaded, project is in working order.
