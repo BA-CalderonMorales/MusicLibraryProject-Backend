@@ -8,3 +8,7 @@ Upon completion of this project, I'll be uploading my JSON api collection to sho
 ______
 
 All documents have been uploaded, project is in working order.
+
+______
+
+Here is the repository for the frontend to this project: https://github.com/carter-willey/Music-Library-FrontEnd
